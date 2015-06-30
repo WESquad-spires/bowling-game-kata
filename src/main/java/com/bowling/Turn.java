@@ -18,9 +18,9 @@ public class Turn {
 
 	public void setPinsDown(int pinsDown) {
 		if (pinsDown1 == UNDEFINED) {
-			this.pinsDown1 = pinsDown;
+			pinsDown1 = pinsDown;
 		} else {
-			this.pinsDown2 = pinsDown;
+			pinsDown2 = pinsDown;
 		}
 	}
 
@@ -32,7 +32,7 @@ public class Turn {
 		return getRoll1Score() + getRoll2Score();
 	}
 
-	public int getRoll1Score() {
+	private int getRoll1Score() {
 		int score = pinsDown1 == UNDEFINED ? 0 : pinsDown1;
 		if (previousTurn != null && previousTurn.isSpare()) {
 			score += score;
@@ -44,7 +44,7 @@ public class Turn {
 		return pinsDown2 != UNDEFINED && score() == MAX_SCORE;
 	}
 
-	public int getRoll2Score() {
+	private int getRoll2Score() {
 		return pinsDown2 == UNDEFINED ? 0 : pinsDown2;
 	}
 
