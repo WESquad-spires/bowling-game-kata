@@ -3,27 +3,27 @@ package com.bowling;
 
 public class BowlingGame {
 
-	private Turn currentTurn = new Turn();
+	private Frame currentFrame = new Frame();
 
 	public void roll(int pinsDown) {
-		currentTurn.setPinsDown(pinsDown);
-		if (currentTurn.isFinished()) {
-			prepareNewTurn();
+		currentFrame.setPinsDown(pinsDown);
+		if (currentFrame.isFinished()) {
+			prepareNewFrame();
 		}
 	}
 
 	public int score() {
 		int score = 0;
 
-		Turn turn = currentTurn;
-		while (turn != null) {
-			score += turn.score();
-			turn = turn.previousTurn();
+		Frame frame = currentFrame;
+		while (frame != null) {
+			score += frame.score();
+			frame = frame.previousFrame();
 		}
 		return score;
 	}
 
-	private void prepareNewTurn() {
-		currentTurn = new Turn(currentTurn);
+	private void prepareNewFrame() {
+		currentFrame = new Frame(currentFrame);
 	}
 }

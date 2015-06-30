@@ -1,18 +1,18 @@
 package com.bowling;
 
-public class Turn {
+public class Frame {
 
 	private static final int MAX_SCORE = 10;
 	private static final int UNDEFINED = -1;
-	private final Turn previousTurn;
+	private final Frame previousFrame;
 	private int pinsDown1 = UNDEFINED;
 	private int pinsDown2 = UNDEFINED;
 
-	public Turn(Turn previousTurn) {
-		this.previousTurn = previousTurn;
+	public Frame(Frame previousFrame) {
+		this.previousFrame = previousFrame;
 	}
 
-	public Turn() {
+	public Frame() {
 		this(null);
 	}
 
@@ -49,11 +49,11 @@ public class Turn {
 	}
 
 	private boolean shouldDoubleRoll1() {
-		return previousTurn != null && (previousTurn.isSpare() || previousTurn.isStrike());
+		return previousFrame != null && (previousFrame.isSpare() || previousFrame.isStrike());
 	}
 
 	private boolean shouldDoubleRoll2() {
-		return previousTurn != null && previousTurn.isStrike();
+		return previousFrame != null && previousFrame.isStrike();
 	}
 
 	private boolean isSpare() {
@@ -76,7 +76,7 @@ public class Turn {
 		return pinsDown2 != UNDEFINED;
 	}
 
-	public Turn previousTurn() {
-		return previousTurn;
+	public Frame previousFrame() {
+		return previousFrame;
 	}
 }
