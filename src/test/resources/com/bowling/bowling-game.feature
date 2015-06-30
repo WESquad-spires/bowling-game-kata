@@ -25,14 +25,27 @@ Feature: Bowling game
 		And I roll and 6 pins fall
 		Then the score should be 9
 	
-	Scenario: Score after three rolls without spare
+	Scenario: Score after three rolls
 		When I roll and 3 pins fall
 		And I roll and 6 pins fall
 		And I roll and 4 pins fall
 		Then the score should be 13
 	
-	Scenario: Score after three rolls with a spare
+	Scenario: Score after a spare and then one roll 
 		When I roll and 4 pins fall
 		And I roll and 6 pins fall
 		And I roll and 4 pins fall
+		Then the score should be 18
+	
+	Scenario: Score after a spare and then tows rolls, but not a new spare 
+		When I roll and 4 pins fall
+		And I roll and 6 pins fall
+		And I roll and 4 pins fall
+		And I roll and 2 pins fall
+		Then the score should be 20
+	
+	Scenario: Score after one strike and then two rolls, but not a spare 
+		When I roll and 10 pins fall
+		And I roll and 1 pins fall
+		And I roll and 3 pins fall
 		Then the score should be 18
