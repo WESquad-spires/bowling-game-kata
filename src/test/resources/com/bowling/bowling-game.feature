@@ -30,3 +30,9 @@ Feature: Bowling game
 		And I roll and 6 pins fall
 		And I roll and 4 pins fall
 		Then the score should be 13
+	
+	Scenario: Score after three rolls with a spare
+		When I roll and 4 pins fall
+		And I roll and 6 pins fall
+		And I roll and 4 pins fall
+		Then the score should be 18
