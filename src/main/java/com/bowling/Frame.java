@@ -7,13 +7,16 @@ public class Frame {
 	private final Frame previousFrame;
 	private int pinsDown1 = UNDEFINED;
 	private int pinsDown2 = UNDEFINED;
+	private Frame nextFrame;
 
 	public Frame(Frame previousFrame) {
 		this.previousFrame = previousFrame;
+		this.previousFrame.setNextFrame(this);
 	}
 
 	public Frame() {
-		this(null);
+		super();
+		previousFrame = null;
 	}
 
 	public void setPinsDown(int pinsDown) {
@@ -29,31 +32,22 @@ public class Frame {
 	}
 
 	public int score() {
-		return getRoll1Score() + getRoll2Score();
-	}
-
-	private int getRoll1Score() {
-		int score = !hasRolled() ? 0 : pinsDown1;
-		if (shouldDoubleRoll1()) {
-			score += score;
+		int score = roll1Score() + roll2Score();
+		if (isSpare()) {
+			score += nextFrame.roll1Score();
+		}
+		if (isStrike()) {
+			score += nextFrame.score();
 		}
 		return score;
 	}
 
-	private int getRoll2Score() {
-		int score = !hasRolledTwice() ? 0 : pinsDown2;
-		if (shouldDoubleRoll2()) {
-			score += score;
-		}
-		return score;
+	private int roll1Score() {
+		return !hasRolled() ? 0 : pinsDown1;
 	}
 
-	private boolean shouldDoubleRoll1() {
-		return previousFrame != null && (previousFrame.isSpare() || previousFrame.isStrike());
-	}
-
-	private boolean shouldDoubleRoll2() {
-		return previousFrame != null && previousFrame.isStrike();
+	private int roll2Score() {
+		return !hasRolledTwice() ? 0 : pinsDown2;
 	}
 
 	private boolean isSpare() {
@@ -65,7 +59,7 @@ public class Frame {
 	}
 
 	private boolean isMaxScore() {
-		return score() == MAX_SCORE;
+		return roll1Score() + roll2Score() == MAX_SCORE;
 	}
 
 	private boolean hasRolled() {
@@ -78,5 +72,13 @@ public class Frame {
 
 	public Frame previousFrame() {
 		return previousFrame;
+	}
+
+	private void setNextFrame(Frame nextFrame) {
+		this.nextFrame = nextFrame;
+	}
+
+	public Frame nextFrame() {
+		return nextFrame;
 	}
 }

@@ -55,13 +55,18 @@ Feature: Bowling game
     When I roll and 10 pins fall
     And I roll and 10 pins fall
     And I roll and 3 pins fall
-    Then the score should be 36
+    Then the score should be 39
 
   Scenario Outline: Score after a specific serie of rolls
     When I roll and <pins down> pins fall
     Then the score should be <expected score>
     
     Examples:
-    	| pins down	| expected score	|
-    	| 3			| 3					|
-    	| 3,6		| 9					|
+    	| pins down									| expected score	|
+    	| 3											| 3					|
+    	| 3,6										| 9					|
+    	| 3,6,4										| 13				|
+    	| 4,6,4										| 18				|
+    	| 4,6,4,2									| 20				|
+    	| 10,1,3									| 18				|
+    	| 10,10,3									| 39				|

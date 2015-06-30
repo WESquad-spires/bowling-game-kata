@@ -1,6 +1,5 @@
 package com.bowling;
 
-
 public class BowlingGame {
 
 	private Frame currentFrame = new Frame();
