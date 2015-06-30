@@ -34,7 +34,7 @@ public class Turn {
 
 	private int getRoll1Score() {
 		int score = !hasRolled() ? 0 : pinsDown1;
-		if (shouldFirstRollBeDoubled()) {
+		if (shouldDoubleRoll1()) {
 			score += score;
 		}
 		return score;
@@ -42,17 +42,17 @@ public class Turn {
 
 	private int getRoll2Score() {
 		int score = !hasRolledTwice() ? 0 : pinsDown2;
-		if (shouldSecondRollBeDoubled()) {
+		if (shouldDoubleRoll2()) {
 			score += score;
 		}
 		return score;
 	}
 
-	private boolean shouldFirstRollBeDoubled() {
+	private boolean shouldDoubleRoll1() {
 		return previousTurn != null && (previousTurn.isSpare() || previousTurn.isStrike());
 	}
 
-	private boolean shouldSecondRollBeDoubled() {
+	private boolean shouldDoubleRoll2() {
 		return previousTurn != null && previousTurn.isStrike();
 	}
 
