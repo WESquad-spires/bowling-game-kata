@@ -1,6 +1,9 @@
 package com.bowling;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -18,9 +21,11 @@ public class BowlingGameStepDefs {
 	public void i_haven_t_played_yet() throws Throwable {
 	}
 
-	@When("^I roll and (\\d+) pins fall$")
-	public void i_roll_and_pins_fall(int pinsDown) throws Throwable {
-		bowlingGame.roll(pinsDown);
+	@When("^I roll and (.*) pins fall$")
+	public void i_roll_and_pins_fall(List<Integer> allPinsDown) throws Throwable {
+		for (int pinsDown : allPinsDown) {
+			bowlingGame.roll(pinsDown);
+		}
 	}
 
 	@Then("^the score should be (\\d+)$")

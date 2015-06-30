@@ -8,6 +8,7 @@ Feature: Bowling game
   Rule 3 : if previous frame was a spare, first roll points are multiplied by 2
   Rule 4 : a strike is when all pins are down at the first roll of the frame
   Rule 5 : if previous frame was a strike, next frame points are multiplied by 2
+  Rule 6 : the game is finished after 10 frames
 
   Background: 
     Given a bowling game
@@ -55,3 +56,12 @@ Feature: Bowling game
     And I roll and 10 pins fall
     And I roll and 3 pins fall
     Then the score should be 36
+
+  Scenario Outline: Score after a specific serie of rolls
+    When I roll and <pins down> pins fall
+    Then the score should be <expected score>
+    
+    Examples:
+    	| pins down	| expected score	|
+    	| 3			| 3					|
+    	| 3,6		| 9					|
