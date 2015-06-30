@@ -32,12 +32,12 @@ public class Frame {
 	}
 
 	public int score() {
-		int score = roll1Score() + roll2Score();
+		int score = roll1And2Score();
 		if (isSpare()) {
 			score += nextFrame.roll1Score();
 		}
 		if (isStrike()) {
-			score += nextFrame.score();
+			score += nextFrame.roll1And2Score();
 		}
 		return score;
 	}
@@ -59,7 +59,11 @@ public class Frame {
 	}
 
 	private boolean isMaxScore() {
-		return roll1Score() + roll2Score() == MAX_SCORE;
+		return roll1And2Score() == MAX_SCORE;
+	}
+
+	private int roll1And2Score() {
+		return roll1Score() + roll2Score();
 	}
 
 	private boolean hasRolled() {

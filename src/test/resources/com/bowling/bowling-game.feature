@@ -55,7 +55,7 @@ Feature: Bowling game
     When I roll and 10 pins fall
     And I roll and 10 pins fall
     And I roll and 3 pins fall
-    Then the score should be 39
+    Then the score should be 36
 
   Scenario Outline: Score after a specific serie of rolls
     When I roll and <pins down> pins fall
@@ -69,4 +69,6 @@ Feature: Bowling game
     	| 4,6,4										| 18				|
     	| 4,6,4,2									| 20				|
     	| 10,1,3									| 18				|
-    	| 10,10,3									| 39				|
+    	| 10,10,3									| 36				|
+    	| 1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1	| 110				|
+    	| 10,10,10,10,10,10,10,10,10,10,10,10		| 300				|
