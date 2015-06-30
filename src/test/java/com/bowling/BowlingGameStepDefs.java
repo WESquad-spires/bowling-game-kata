@@ -18,9 +18,15 @@ public class BowlingGameStepDefs {
 	public void i_haven_t_played_yet() throws Throwable {
 	}
 
+	@When("^I roll and knock down (\\d+) and (\\d+) pins$")
+	public void i_roll_and_knock_down_pins(int pinsDown1, int pinsDown2) throws Throwable {
+		bowlingGame.roll(pinsDown1);
+		bowlingGame.roll(pinsDown2);
+	}
+
 	@Then("^the score should be (\\d+)$")
-	public void the_score_should_be(int arg1) throws Throwable {
-		assertEquals(0, bowlingGame.score());
+	public void the_score_should_be(int score) throws Throwable {
+		assertEquals(score, bowlingGame.score());
 	}
 
 }
