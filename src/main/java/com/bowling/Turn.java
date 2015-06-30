@@ -17,7 +17,7 @@ public class Turn {
 	}
 
 	public void setPinsDown(int pinsDown) {
-		if (pinsDown1 == UNDEFINED) {
+		if (!hasRolled()) {
 			pinsDown1 = pinsDown;
 		} else {
 			pinsDown2 = pinsDown;
@@ -25,7 +25,7 @@ public class Turn {
 	}
 
 	public boolean isFinished() {
-		return pinsDown2 != UNDEFINED || score() == MAX_SCORE;
+		return hasRolledTwice() || isMaxScore();
 	}
 
 	public int score() {
@@ -33,19 +33,47 @@ public class Turn {
 	}
 
 	private int getRoll1Score() {
-		int score = pinsDown1 == UNDEFINED ? 0 : pinsDown1;
-		if (previousTurn != null && previousTurn.isSpare()) {
+		int score = !hasRolled() ? 0 : pinsDown1;
+		if (shouldFirstRollBeDoubled()) {
 			score += score;
 		}
 		return score;
 	}
 
-	private boolean isSpare() {
-		return pinsDown2 != UNDEFINED && score() == MAX_SCORE;
+	private int getRoll2Score() {
+		int score = !hasRolledTwice() ? 0 : pinsDown2;
+		if (shouldSecondRollBeDoubled()) {
+			score += score;
+		}
+		return score;
 	}
 
-	private int getRoll2Score() {
-		return pinsDown2 == UNDEFINED ? 0 : pinsDown2;
+	private boolean shouldFirstRollBeDoubled() {
+		return previousTurn != null && (previousTurn.isSpare() || previousTurn.isStrike());
+	}
+
+	private boolean shouldSecondRollBeDoubled() {
+		return previousTurn != null && previousTurn.isStrike();
+	}
+
+	private boolean isSpare() {
+		return hasRolledTwice() && isMaxScore();
+	}
+
+	private boolean isStrike() {
+		return hasRolled() && !hasRolledTwice() && isMaxScore();
+	}
+
+	private boolean isMaxScore() {
+		return score() == MAX_SCORE;
+	}
+
+	private boolean hasRolled() {
+		return pinsDown1 != UNDEFINED;
+	}
+
+	private boolean hasRolledTwice() {
+		return pinsDown2 != UNDEFINED;
 	}
 
 	public Turn previousTurn() {

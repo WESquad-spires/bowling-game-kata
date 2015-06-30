@@ -44,7 +44,7 @@ Feature: Bowling game
 		And I roll and 2 pins fall
 		Then the score should be 20
 	
-	Scenario: Score after one strike and then two rolls, but not a spare 
+	Scenario: Score after one strike and then two rolls, but not a spare
 		When I roll and 10 pins fall
 		And I roll and 1 pins fall
 		And I roll and 3 pins fall
