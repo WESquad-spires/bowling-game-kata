@@ -18,10 +18,9 @@ public class BowlingGameStepDefs {
 	public void i_haven_t_played_yet() throws Throwable {
 	}
 
-	@When("^I roll and knock down (\\d+) and (\\d+) pins$")
-	public void i_roll_and_knock_down_pins(int pinsDown1, int pinsDown2) throws Throwable {
-		bowlingGame.roll(pinsDown1);
-		bowlingGame.roll(pinsDown2);
+	@When("^I roll and (\\d+) pins fall$")
+	public void i_roll_and_pins_fall(int pinsDown) throws Throwable {
+		bowlingGame.roll(pinsDown);
 	}
 
 	@Then("^the score should be (\\d+)$")

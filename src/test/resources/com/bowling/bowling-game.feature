@@ -10,6 +10,6 @@ Feature: Bowling game
 		When I haven't played yet
 		Then the score should be 0
 	
-	Scenario: Score after one simple roll without strike nor spare
-		When I roll and knock down 3 and 4 pins
-		Then the score should be 7
+	Scenario: Score after one roll
+		When I roll and 3 pins fall
+		Then the score should be 3
