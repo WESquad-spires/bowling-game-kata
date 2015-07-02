@@ -1,5 +1,7 @@
 package com.bowling;
 
+import static java.lang.Math.min;
+
 public class Frame {
 
 	private static final int MAX_SCORE = 10;
@@ -11,7 +13,7 @@ public class Frame {
 
 	public Frame(Frame previousFrame) {
 		this.previousFrame = previousFrame;
-		this.previousFrame.setNextFrame(this);
+		this.previousFrame.nextFrame = this;
 	}
 
 	public Frame() {
@@ -37,8 +39,9 @@ public class Frame {
 			score += nextFrame.roll1Score();
 		}
 		if (isStrike()) {
-			score += nextFrame.roll1And2Score();
+			score += nextFrame.score();
 		}
+		score = min(score, 30);
 		return score;
 	}
 
@@ -76,10 +79,6 @@ public class Frame {
 
 	public Frame previousFrame() {
 		return previousFrame;
-	}
-
-	private void setNextFrame(Frame nextFrame) {
-		this.nextFrame = nextFrame;
 	}
 
 	public Frame nextFrame() {

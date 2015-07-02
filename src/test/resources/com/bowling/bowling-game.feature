@@ -51,11 +51,20 @@ Feature: Bowling game
     And I roll and 3 pins fall
     Then the score should be 18
 
-  Scenario: Score after two strikes and then one roll
+  Scenario: Score after two strikes and neither spare nor strike frame
     When I roll and 10 pins fall
     And I roll and 10 pins fall
     And I roll and 3 pins fall
-    Then the score should be 36
+    And I roll and 0 pins fall
+    Then the score should be 39
+
+  Scenario: Score after three strikes and neither spare nor strike frame
+    When I roll and 10 pins fall
+    And I roll and 10 pins fall
+    And I roll and 10 pins fall
+    And I roll and 3 pins fall
+    And I roll and 0 pins fall
+    Then the score should be 69
 
   Scenario Outline: Score after a specific serie of rolls
     When I roll and <pins down> pins fall
@@ -69,6 +78,6 @@ Feature: Bowling game
     	| 4,6,4										| 18				|
     	| 4,6,4,2									| 20				|
     	| 10,1,3									| 18				|
-    	| 10,10,3									| 36				|
+    	| 10,10,3,0									| 39				|
     	| 1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1	| 110				|
     	| 10,10,10,10,10,10,10,10,10,10,10,10		| 300				|
