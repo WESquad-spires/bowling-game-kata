@@ -14,5 +14,8 @@ A strike is when the player knocks down all 10 pins on his first try.  The bonus
 for that frame is the value of the next two balls rolled.
 
 In the tenth frame a player who rolls a spare or strike is allowed to roll the extra
-balls to complete the frame.  However no more than three balls can be rolled in
+balls to complete the frame. However no more than three balls can be rolled in
 tenth frame.
+
+Maximum points for a frame is 30.
+An online score calculator is available here : http://www.sportcalculators.com/bowling-score-calculator
