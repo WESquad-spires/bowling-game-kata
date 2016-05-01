@@ -2,7 +2,8 @@ package com.bowling;
 
 public class BowlingGame {
 
-	private Frame currentFrame = new Frame();
+	private Frame initialFrame = new Frame();
+	private Frame currentFrame = initialFrame;
 
 	public BowlingGame() {
 		System.out.println("Initializing a new Bowling Game");
@@ -12,21 +13,11 @@ public class BowlingGame {
 		currentFrame.setPinsDown(pinsDown);
 		if (currentFrame.isFinished()) {
 			prepareNewFrame();
-		} else {
-			System.out.println("Game is finished !");
 		}
 	}
 
 	public int score() {
-		int score = 0;
-
-		Frame frame = currentFrame;
-		while (frame != null) {
-			int frameScore = frame.score();
-			score += frameScore;
-			System.out.println("Frame " + frame.index() + " score : " + frameScore + " ; Total=" + score);
-			frame = frame.previousFrame();
-		}
+		int score = initialFrame.totalScore();
 		return score;
 	}
 

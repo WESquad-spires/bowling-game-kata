@@ -8,20 +8,17 @@ public class Frame {
 	private static final int LAST_FRAME_INDEX = 10;
 	private static final int MAX_TOTAL_SCORE = 30;
 	private static final int UNDEFINED = -1;
-	private final Frame previousFrame;
 	private final int[] pinsDown = new int[] { UNDEFINED, UNDEFINED, UNDEFINED };
 	private Frame nextFrame;
 	private final int index;
 
 	public Frame(Frame previousFrame) {
-		this.previousFrame = previousFrame;
-		this.previousFrame.nextFrame = this;
+		previousFrame.nextFrame = this;
 		this.index = previousFrame.index + 1;
 	}
 
 	public Frame() {
 		super();
-		this.previousFrame = null;
 		this.index = 1;
 	}
 
@@ -50,11 +47,12 @@ public class Frame {
 
 	public int score() {
 		int score = innerScore();
-		if (isSpare()) {
-			score += nextFrame.roll1Score();
-		}
-		if (isStrike()) {
-			score += nextFrame.score();
+		if (nextFrame != null) {
+			if (isSpare()) {
+				score += nextFrame.roll1Score();
+			} else if (isStrike()) {
+				score += nextFrame.score();
+			}
 		}
 		score = min(score, MAX_TOTAL_SCORE);
 		return score;
@@ -100,15 +98,15 @@ public class Frame {
 		return pinsDown[2] != UNDEFINED;
 	}
 
-	public Frame previousFrame() {
-		return previousFrame;
-	}
-
-	public Frame nextFrame() {
-		return nextFrame;
-	}
-
 	public int index() {
 		return index;
+	}
+
+	public int totalScore() {
+		int totalScore = score();
+		if (nextFrame != null) {
+			totalScore += nextFrame.totalScore();
+		}
+		return totalScore;
 	}
 }
