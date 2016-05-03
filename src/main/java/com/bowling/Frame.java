@@ -46,10 +46,10 @@ public class Frame {
 	}
 
 	public int score() {
-		int score = innerScore();
+		int score = pinsDownTotal();
 		if (nextFrame != null) {
 			if (isSpare()) {
-				score += nextFrame.roll1Score();
+				score += nextFrame.pinsDownFirstRoll();
 			} else if (isStrike()) {
 				score += nextFrame.score();
 			}
@@ -58,19 +58,19 @@ public class Frame {
 		return score;
 	}
 
-	private int innerScore() {
-		return roll1Score() + roll2Score() + roll3Score();
+	private int pinsDownTotal() {
+		return pinsDownFirstRoll() + pinsDownSecondRoll() + pinsDownThirdRoll();
 	}
 
-	private int roll1Score() {
+	private int pinsDownFirstRoll() {
 		return !hasRolled() ? 0 : pinsDown[0];
 	}
 
-	private int roll2Score() {
+	private int pinsDownSecondRoll() {
 		return !hasRolledTwice() ? 0 : pinsDown[1];
 	}
 
-	private int roll3Score() {
+	private int pinsDownThirdRoll() {
 		return !hasRolledThreeTimes() ? 0 : pinsDown[2];
 	}
 
@@ -83,7 +83,7 @@ public class Frame {
 	}
 
 	private boolean isMaxScore() {
-		return innerScore() == MAX_INNER_SCORE;
+		return pinsDownTotal() == MAX_INNER_SCORE;
 	}
 
 	private boolean hasRolled() {
