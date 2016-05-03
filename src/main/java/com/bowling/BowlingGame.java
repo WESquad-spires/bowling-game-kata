@@ -9,7 +9,11 @@ public class BowlingGame {
 		if (currentFrame.isFinished()) {
 			prepareNewFrame();
 		}
-		currentFrame.setPinsDown(pinsDown);
+		currentFrame.roll(pinsDown);
+	}
+
+	private void prepareNewFrame() {
+		currentFrame = new Frame(currentFrame);
 	}
 
 	public int score() {
@@ -17,11 +21,11 @@ public class BowlingGame {
 		return score;
 	}
 
-	private void prepareNewFrame() {
-		currentFrame = new Frame(currentFrame);
-	}
-
 	public Frame currentFrame() {
 		return currentFrame;
+	}
+
+	public boolean isFinished() {
+		return currentFrame().isFinished() && currentFrame().isLastFrame();
 	}
 }

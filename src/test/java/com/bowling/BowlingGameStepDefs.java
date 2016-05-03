@@ -41,4 +41,9 @@ public class BowlingGameStepDefs {
 	public void there_is_a_strike() {
 		assertThat(bowlingGame.currentFrame().isStrike()).isTrue();
 	}
+
+	@Then("^the game is finished$")
+	public void the_game_is_finished() throws Throwable {
+		assertThat(bowlingGame.isFinished()).isTrue();
+	}
 }

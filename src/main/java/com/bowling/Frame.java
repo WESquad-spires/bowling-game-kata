@@ -1,16 +1,14 @@
 package com.bowling;
 
-import static java.lang.Math.min;
-
 public class Frame {
 
-	private static final int MAX_INNER_SCORE = 10;
-	private static final int LAST_FRAME_INDEX = 10;
-	private static final int MAX_TOTAL_SCORE = 30;
-	private static final int UNDEFINED = -1;
-	private final int[] pinsDown = new int[] { UNDEFINED, UNDEFINED, UNDEFINED };
+	private static final int PINS_COUNT = 10;
+	private static final int MAX_FRAME_COUNT = 10;
+
 	private Frame nextFrame;
 	private final int index;
+	private int[] pinsDown = new int[4];
+	private int rollIndex = 0;
 
 	public Frame(Frame previousFrame) {
 		previousFrame.nextFrame = this;
@@ -18,88 +16,69 @@ public class Frame {
 	}
 
 	public Frame() {
-		super();
 		this.index = 1;
 	}
 
-	public void setPinsDown(int pinsDown) {
-		int rollIndex = nextRollIndex();
+	public void roll(int pinsDown) {
 		this.pinsDown[rollIndex] = pinsDown;
-	}
-
-	private int nextRollIndex() {
-		if (!hasRolled()) {
-			return 0;
-		} else if (!hasRolledTwice()) {
-			return 1;
-		} else {
-			return 2;
-		}
+		rollIndex++;
 	}
 
 	public boolean isFinished() {
-		return isLastFrame() ? hasRolledThreeTimes() : hasRolledTwice() || isMaxScore();
+		if (isLastFrame() && (isStrike() || isSpare())) {
+			return rollCountIs(3);
+		}
+		return rollCountIs(2) || allPinsDown();
 	}
 
-	private boolean isLastFrame() {
-		return index == LAST_FRAME_INDEX;
+	boolean isLastFrame() {
+		return index == MAX_FRAME_COUNT;
 	}
 
 	public int score() {
 		int score = pinsDownTotal();
 		if (nextFrame != null) {
 			if (isSpare()) {
-				score += nextFrame.pinsDownFirstRoll();
+				score += nextFrame.pinsDown[0];
 			} else if (isStrike()) {
-				score += nextFrame.score();
+				score += nextFrame.twoRollsScore();
 			}
 		}
-		score = min(score, MAX_TOTAL_SCORE);
+		return score;
+	}
+
+	private int twoRollsScore() {
+		int score = pinsDown[0];
+		if (!isStrike()) {
+			score += pinsDown[1];
+		} else if (nextFrame != null) {
+			score += nextFrame.pinsDown[0];
+		}
 		return score;
 	}
 
 	private int pinsDownTotal() {
-		return pinsDownFirstRoll() + pinsDownSecondRoll() + pinsDownThirdRoll();
-	}
-
-	private int pinsDownFirstRoll() {
-		return !hasRolled() ? 0 : pinsDown[0];
-	}
-
-	private int pinsDownSecondRoll() {
-		return !hasRolledTwice() ? 0 : pinsDown[1];
-	}
-
-	private int pinsDownThirdRoll() {
-		return !hasRolledThreeTimes() ? 0 : pinsDown[2];
+		int pinsDownTotal = 0;
+		for (int pinsDown : this.pinsDown) {
+			pinsDownTotal += pinsDown;
+		}
+		return pinsDownTotal;
 	}
 
 	public boolean isSpare() {
-		return hasRolledTwice() && isMaxScore();
+		return !isStrike() && pinsDown[0] + pinsDown[1] == PINS_COUNT;
 	}
 
 	public boolean isStrike() {
-		return hasRolled() && !hasRolledTwice() && isMaxScore();
+		return pinsDown[0] == PINS_COUNT;
 	}
 
-	private boolean isMaxScore() {
-		return pinsDownTotal() == MAX_INNER_SCORE;
+	private boolean allPinsDown() {
+		return pinsDownTotal() == PINS_COUNT;
 	}
 
-	private boolean hasRolled() {
-		return pinsDown[0] != UNDEFINED;
-	}
-
-	private boolean hasRolledTwice() {
-		return pinsDown[1] != UNDEFINED;
-	}
-
-	private boolean hasRolledThreeTimes() {
-		return pinsDown[2] != UNDEFINED;
-	}
-
-	public int index() {
-		return index;
+	private boolean rollCountIs(int count) {
+		return rollIndex == count;
 	}
 
 	public int totalScore() {
