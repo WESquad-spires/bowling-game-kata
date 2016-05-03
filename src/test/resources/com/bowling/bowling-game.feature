@@ -65,16 +65,17 @@ Feature: Bowling game
     When I roll and <pins down> pins fall
     Then the score should be <expected score>
     Examples:
-    	| pins down					| expected score	|
-    	| 0,0,0,0,0,0,0,0,0,2,8,5	| 15				|
-    	| 0,0,0,0,0,0,0,0,0,2,8,10	| 20				|
+    	| pins down										| expected score	|
+    	| 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,8,5		| 15				|
+    	| 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,8,10	| 20				|
 
+  @this
   Scenario Outline: Last frame has 2 bonus rolls if player makes a strike
     When I roll and <pins down> pins fall
     Then the score should be <expected score>
     Examples:
-    	| pins down								| expected score	|
-    	| 0,0,0,0,0,0,0,0,0,10,2,2				| 14				|
-    	| 0,0,0,0,0,0,0,0,0,10,10,2				| 22				|
-    	| 0,0,0,0,0,0,0,0,0,10,10,10			| 30				|
-    	| 10,10,10,10,10,10,10,10,10,10,10,10	| 300				|
+    	| pins down										| expected score	|
+    	| 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,2,2	| 14				|
+    	| 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,2	| 22				|
+    	| 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10	| 30				|
+    	| 10,10,10,10,10,10,10,10,10,10,10,10			| 300				|

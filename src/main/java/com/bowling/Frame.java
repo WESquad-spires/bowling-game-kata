@@ -49,7 +49,7 @@ public class Frame {
 
 	private int twoRollsScore() {
 		int score = pinsDown[0];
-		if (!isStrike()) {
+		if (!isStrike() || isLastFrame()) {
 			score += pinsDown[1];
 		} else if (nextFrame != null) {
 			score += nextFrame.pinsDown[0];
