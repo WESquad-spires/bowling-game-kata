@@ -39,6 +39,18 @@ Feature: Bowling game
     	| 4,6,4,2		| 20				|
     	| 4,3,4,6,6,2	| 31				|
 
+  Scenario: 10 pins down in one rolls is called a strike
+    When I roll and 10 pins fall
+    Then there is a strike
+
+  Scenario Outline: After a strike next frame counts twice
+    When I roll and <pins down> pins fall
+    Then the score should be <expected score>
+    Examples:
+    	| pins down		| expected score	|
+    	| 10,4,2		| 22				|
+    	| 4,3,10,6,2	| 33				|
+
   Scenario: Score after one strike and then two rolls, but not a spare
     When I roll and 10 pins fall
     And I roll and 1 pins fall

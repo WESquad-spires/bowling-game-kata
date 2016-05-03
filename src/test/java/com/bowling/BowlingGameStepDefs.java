@@ -36,4 +36,9 @@ public class BowlingGameStepDefs {
 	public void there_is_a_spare() throws Throwable {
 		assertThat(bowlingGame.currentFrame().isSpare()).isTrue();
 	}
+
+	@Then("^there is a strike$")
+	public void there_is_a_strike() throws Throwable {
+		assertThat(bowlingGame.currentFrame().isStrike()).isTrue();
+	}
 }
