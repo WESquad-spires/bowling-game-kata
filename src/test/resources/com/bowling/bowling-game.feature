@@ -21,28 +21,23 @@ Feature: Bowling game
     When I roll and <pins down> pins fall
     Then the score should be <expected score>
     Examples:
-    	| pins down									| expected score	|
-    	| 3											| 3					|
-    	| 3,6										| 9					|
-    	| 3,6,4										| 13				|
+    	| pins down	| expected score	|
+    	| 3			| 3					|
+    	| 3,6		| 9					|
+    	| 3,6,4		| 13				|
 
   Scenario: 10 pins down in two rolls is called a spare
     When I roll and 4 pins fall
     And I roll and 6 pins fall
     Then there is a spare
 
-  Scenario: after a spare, next roll counts twice
-    When I roll and 4 pins fall
-    And I roll and 6 pins fall
-    And I roll and 4 pins fall
-    Then the score should be 18
-
-  Scenario: Score after a spare and then tows rolls, but not a new spare
-    When I roll and 4 pins fall
-    And I roll and 6 pins fall
-    And I roll and 4 pins fall
-    And I roll and 2 pins fall
-    Then the score should be 20
+  Scenario Outline: After a spare, next roll counts twice
+    When I roll and <pins down> pins fall
+    Then the score should be <expected score>
+    Examples:
+    	| pins down		| expected score	|
+    	| 4,6,4,2		| 20				|
+    	| 4,3,4,6,6,2	| 31				|
 
   Scenario: Score after one strike and then two rolls, but not a spare
     When I roll and 10 pins fall
