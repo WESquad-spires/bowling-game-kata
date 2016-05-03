@@ -20,7 +20,7 @@ public class BowlingGame {
 	}
 
 	public int score() {
-		return initialFrame.totalScore();
+		return initialFrame.cumulatedScore();
 	}
 
 	public Frame currentFrame() {

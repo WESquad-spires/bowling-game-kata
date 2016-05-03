@@ -5,23 +5,23 @@ public class Frame {
 	private static final int PINS_COUNT = 10;
 	private static final int MAX_FRAME_COUNT = 10;
 
-	private Frame nextFrame;
 	private final int index;
+	private Frame nextFrame;
 	private int[] pinsDown = new int[3];
-	private int rollIndex = 0;
+	private int rollCount = 0;
 
 	public Frame(Frame previousFrame) {
 		previousFrame.nextFrame = this;
-		this.index = previousFrame.index + 1;
+		index = previousFrame.index + 1;
 	}
 
 	public Frame() {
-		this.index = 1;
+		index = 1;
 	}
 
 	public void roll(int pinsDown) {
-		this.pinsDown[rollIndex] = pinsDown;
-		rollIndex++;
+		this.pinsDown[rollCount] = pinsDown;
+		rollCount++;
 	}
 
 	public boolean isFinished() {
@@ -31,33 +31,29 @@ public class Frame {
 		return rollCountIs(2) || allPinsDown();
 	}
 
-	boolean isLastFrame() {
+	public boolean isLastFrame() {
 		return index == MAX_FRAME_COUNT;
 	}
 
-	public int score() {
-		int score = pinsDownTotal();
-		if (nextFrame != null) {
-			if (isSpare()) {
-				score += nextFrame.pinsDown[0];
-			} else if (isStrike()) {
-				score += nextFrame.twoRollsScore();
-			}
-		}
-		return score;
+	public boolean isSpare() {
+		return !isStrike() && firstRollScore() + secondRollScore() == PINS_COUNT;
 	}
 
-	private int twoRollsScore() {
-		int score = pinsDown[0];
+	public boolean isStrike() {
+		return firstRollScore() == PINS_COUNT;
+	}
+
+	private int firstTwoRollsScore() {
+		int score = firstRollScore();
 		if (!isStrike() || isLastFrame()) {
-			score += pinsDown[1];
-		} else if (nextFrame != null) {
-			score += nextFrame.pinsDown[0];
+			score += secondRollScore();
+		} else if (hasNextFrame()) {
+			score += nextFrame.firstRollScore();
 		}
 		return score;
 	}
 
-	private int pinsDownTotal() {
+	private int totalPinsDown() {
 		int pinsDownTotal = 0;
 		for (int pinsDown : this.pinsDown) {
 			pinsDownTotal += pinsDown;
@@ -65,27 +61,43 @@ public class Frame {
 		return pinsDownTotal;
 	}
 
-	public boolean isSpare() {
-		return !isStrike() && pinsDown[0] + pinsDown[1] == PINS_COUNT;
-	}
-
-	public boolean isStrike() {
-		return pinsDown[0] == PINS_COUNT;
-	}
-
 	private boolean allPinsDown() {
-		return pinsDownTotal() == PINS_COUNT;
+		return totalPinsDown() == PINS_COUNT;
+	}
+
+	private int firstRollScore() {
+		return pinsDown[0];
+	}
+
+	private int secondRollScore() {
+		return pinsDown[1];
 	}
 
 	private boolean rollCountIs(int count) {
-		return rollIndex == count;
+		return rollCount == count;
 	}
 
-	public int totalScore() {
-		int totalScore = score();
-		if (nextFrame != null) {
-			totalScore += nextFrame.totalScore();
+	private boolean hasNextFrame() {
+		return nextFrame != null;
+	}
+
+	public int cumulatedScore() {
+		int totalScore = totalPinsDown() + bonus();
+		if (hasNextFrame()) {
+			totalScore += nextFrame.cumulatedScore();
 		}
 		return totalScore;
+	}
+
+	private int bonus() {
+		int bonus = 0;
+		if (hasNextFrame()) {
+			if (isSpare()) {
+				bonus = nextFrame.firstRollScore();
+			} else if (isStrike()) {
+				bonus = nextFrame.firstTwoRollsScore();
+			}
+		}
+		return bonus;
 	}
 }
