@@ -1,7 +1,6 @@
 package com.bowling;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import cucumber.api.java.en.Given;
@@ -30,7 +29,11 @@ public class BowlingGameStepDefs {
 
 	@Then("^the score should be (\\d+)$")
 	public void the_score_should_be(int score) throws Throwable {
-		assertEquals(score, bowlingGame.score());
+		assertThat(bowlingGame.score()).isEqualTo(score);
 	}
 
+	@Then("^there is a spare$")
+	public void there_is_a_spare() throws Throwable {
+		assertThat(bowlingGame.currentFrame().isSpare()).isTrue();
+	}
 }

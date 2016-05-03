@@ -74,11 +74,11 @@ public class Frame {
 		return !hasRolledThreeTimes() ? 0 : pinsDown[2];
 	}
 
-	private boolean isSpare() {
+	public boolean isSpare() {
 		return hasRolledTwice() && isMaxScore();
 	}
 
-	private boolean isStrike() {
+	public boolean isStrike() {
 		return hasRolled() && !hasRolledTwice() && isMaxScore();
 	}
 

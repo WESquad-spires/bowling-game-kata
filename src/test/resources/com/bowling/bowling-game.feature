@@ -17,22 +17,21 @@ Feature: Bowling game
     When I haven't played yet
     Then the score should be 0
 
-  Scenario: Score after one roll
-    When I roll and 3 pins fall
-    Then the score should be 3
+  Scenario Outline: Score is the sum of pins down
+    When I roll and <pins down> pins fall
+    Then the score should be <expected score>
+    Examples:
+    	| pins down									| expected score	|
+    	| 3											| 3					|
+    	| 3,6										| 9					|
+    	| 3,6,4										| 13				|
 
-  Scenario: Score after two rolls
-    When I roll and 3 pins fall
+  Scenario: 10 pins down in two rolls is called a spare
+    When I roll and 4 pins fall
     And I roll and 6 pins fall
-    Then the score should be 9
+    Then there is a spare
 
-  Scenario: Score after three rolls
-    When I roll and 3 pins fall
-    And I roll and 6 pins fall
-    And I roll and 4 pins fall
-    Then the score should be 13
-
-  Scenario: Score after a spare and then one roll
+  Scenario: after a spare, next roll counts twice
     When I roll and 4 pins fall
     And I roll and 6 pins fall
     And I roll and 4 pins fall
@@ -72,9 +71,6 @@ Feature: Bowling game
     
     Examples:
     	| pins down									| expected score	|
-    	| 3											| 3					|
-    	| 3,6										| 9					|
-    	| 3,6,4										| 13				|
     	| 4,6,4										| 18				|
     	| 4,6,4,2									| 20				|
     	| 10,1,3									| 18				|

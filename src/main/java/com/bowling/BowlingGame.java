@@ -6,10 +6,10 @@ public class BowlingGame {
 	private Frame currentFrame = initialFrame;
 
 	public void roll(int pinsDown) {
-		currentFrame.setPinsDown(pinsDown);
 		if (currentFrame.isFinished()) {
 			prepareNewFrame();
 		}
+		currentFrame.setPinsDown(pinsDown);
 	}
 
 	public int score() {
@@ -19,5 +19,9 @@ public class BowlingGame {
 
 	private void prepareNewFrame() {
 		currentFrame = new Frame(currentFrame);
+	}
+
+	public Frame currentFrame() {
+		return currentFrame;
 	}
 }
