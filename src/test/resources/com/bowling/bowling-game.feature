@@ -1,19 +1,12 @@
-Feature: Bowling game
-  As a player
-  In order to know my score at the end of the game
-  I want to know my score after each roll
+Feature: Compute a bowling game score for one player
+  As a bowling game player
+  In order to know if I'm the best
+  I want to compute my score
   
-  Rule 1 : a frame is over when all pins are down, or if players rolled 2 times
-  Rule 2 : a spare is when all pins are down after 2 rolls
-  Rule 3 : if previous frame was a spare, first roll points are multiplied by 2
-  Rule 4 : a strike is when all pins are down at the first roll of the frame
-  Rule 5 : if previous frame was a strike, next frame points are multiplied by 2
-  Rule 6 : the game is finished after 10 frames
-
   Background: 
     Given a new bowling game
 
-  Scenario: Score must be equal to zero at the beginning of the game
+  Scenario: Score is zero at the beginning of the game
     When I haven't played yet
     Then the score should be 0
 
@@ -25,6 +18,10 @@ Feature: Bowling game
     	| 3			| 3					|
     	| 3,6		| 9					|
     	| 3,6,4		| 13				|
+
+  Scenario: There are only 10 pins to hit
+    When I roll and 11 pins fall
+    Then following error is thrown: "Where did this one came from ?!"
 
   Scenario: 10 pins down in two rolls is called a spare
     When I roll and 4 pins fall
@@ -69,7 +66,6 @@ Feature: Bowling game
     	| 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,8,5		| 15				|
     	| 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,8,10	| 20				|
 
-  @this
   Scenario Outline: Last frame has 2 bonus rolls if player makes a strike
     When I roll and <pins down> pins fall
     Then the score should be <expected score>

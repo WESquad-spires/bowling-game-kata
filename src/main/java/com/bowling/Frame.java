@@ -20,6 +20,9 @@ public class Frame {
 	}
 
 	public void roll(int pinsDown) {
+		if (pinsDown > PINS_COUNT) {
+			throw new IllegalArgumentException("Where did this one came from ?!");
+		}
 		this.pinsDown[rollCount] = pinsDown;
 		rollCount++;
 	}
