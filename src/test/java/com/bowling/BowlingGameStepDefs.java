@@ -12,33 +12,33 @@ public class BowlingGameStepDefs {
 	private BowlingGame bowlingGame;
 
 	@Given("^a bowling game$")
-	public void a_bowling_game() throws Throwable {
+	public void a_bowling_game() {
 		bowlingGame = new BowlingGame();
 	}
 
 	@When("^I haven't played yet$")
-	public void i_haven_t_played_yet() throws Throwable {
+	public void i_haven_t_played_yet() {
 	}
 
 	@When("^I roll and (.*) pins fall$")
-	public void i_roll_and_pins_fall(List<Integer> allPinsDown) throws Throwable {
+	public void i_roll_and_pins_fall(List<Integer> allPinsDown) {
 		for (int pinsDown : allPinsDown) {
 			bowlingGame.roll(pinsDown);
 		}
 	}
 
 	@Then("^the score should be (\\d+)$")
-	public void the_score_should_be(int score) throws Throwable {
+	public void the_score_should_be(int score) {
 		assertThat(bowlingGame.score()).isEqualTo(score);
 	}
 
 	@Then("^there is a spare$")
-	public void there_is_a_spare() throws Throwable {
+	public void there_is_a_spare() {
 		assertThat(bowlingGame.currentFrame().isSpare()).isTrue();
 	}
 
 	@Then("^there is a strike$")
-	public void there_is_a_strike() throws Throwable {
+	public void there_is_a_strike() {
 		assertThat(bowlingGame.currentFrame().isStrike()).isTrue();
 	}
 }
