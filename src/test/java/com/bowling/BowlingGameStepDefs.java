@@ -10,6 +10,7 @@ import cucumber.api.java.en.When;
 public class BowlingGameStepDefs {
 
 	private BowlingGame bowlingGame;
+	private IllegalArgumentException error;
 
 	@Given("^a new bowling game$")
 	public void a_new_bowling_game() {
@@ -22,8 +23,12 @@ public class BowlingGameStepDefs {
 
 	@When("^I roll and (.*) pins fall$")
 	public void i_roll_and_pins_fall(List<Integer> allPinsDown) {
-		for (int pinsDown : allPinsDown) {
-			bowlingGame.roll(pinsDown);
+		try {
+			for (int pinsDown : allPinsDown) {
+				bowlingGame.roll(pinsDown);
+			}
+		} catch (IllegalArgumentException e) {
+			this.error = e;
 		}
 	}
 
@@ -45,5 +50,11 @@ public class BowlingGameStepDefs {
 	@Then("^the game is finished$")
 	public void the_game_is_finished() throws Throwable {
 		assertThat(bowlingGame.isFinished()).isTrue();
+	}
+
+	@Then("^following error is thrown: \"(.*?)\"$")
+	public void following_error_is_thrown(String errorMessage) throws Throwable {
+		assertThat(error).as("Error message expected").isNotNull();
+		assertThat(error).hasMessage(errorMessage);
 	}
 }

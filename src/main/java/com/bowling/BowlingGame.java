@@ -6,6 +6,9 @@ public class BowlingGame {
 	private Frame currentFrame = initialFrame;
 
 	public void roll(int pinsDown) {
+		if (isFinished()) {
+			throw new IllegalArgumentException("You cheater !");
+		}
 		if (currentFrame.isFinished()) {
 			prepareNewFrame();
 		}

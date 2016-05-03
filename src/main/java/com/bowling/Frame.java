@@ -7,7 +7,7 @@ public class Frame {
 
 	private Frame nextFrame;
 	private final int index;
-	private int[] pinsDown = new int[4];
+	private int[] pinsDown = new int[3];
 	private int rollIndex = 0;
 
 	public Frame(Frame previousFrame) {

@@ -55,7 +55,11 @@ Feature: Bowling game
 
   Scenario: A game is 10 frames
     When I roll and 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 pins fall
-    And the game is finished
+    Then the game is finished
+
+  Scenario: Play more than 10 frames is not allowed !
+    When I roll and 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 pins fall
+    Then following error is thrown: "You cheater !"
 
   Scenario Outline: Last frame has 1 bonus roll if player makes a spare
     When I roll and <pins down> pins fall
