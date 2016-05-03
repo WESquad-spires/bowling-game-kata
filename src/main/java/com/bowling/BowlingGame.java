@@ -5,10 +5,6 @@ public class BowlingGame {
 	private Frame initialFrame = new Frame();
 	private Frame currentFrame = initialFrame;
 
-	public BowlingGame() {
-		System.out.println("Initializing a new Bowling Game");
-	}
-
 	public void roll(int pinsDown) {
 		currentFrame.setPinsDown(pinsDown);
 		if (currentFrame.isFinished()) {
