@@ -11,8 +11,8 @@ public class BowlingGameStepDefs {
 
 	private BowlingGame bowlingGame;
 
-	@Given("^a bowling game$")
-	public void a_bowling_game() {
+	@Given("^a new bowling game$")
+	public void a_new_bowling_game() {
 		bowlingGame = new BowlingGame();
 	}
 

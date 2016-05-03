@@ -11,7 +11,7 @@ Feature: Bowling game
   Rule 6 : the game is finished after 10 frames
 
   Background: 
-    Given a bowling game
+    Given a new bowling game
 
   Scenario: Score must be equal to zero at the beginning of the game
     When I haven't played yet
